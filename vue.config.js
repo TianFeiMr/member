@@ -6,5 +6,6 @@ module.exports = defineConfig({
     host:"localhost",
     open:false,
     https:false
-  }
+  },
+  lintOnSave:false
 });

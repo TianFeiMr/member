@@ -9,20 +9,76 @@ const routes = [
     path: "/",
     name: "home",
     component: HomeView,
+    redirect: '/login',  // 重定向:重新指向其它path,会改变网址
   },
   {
     path: "/about",
     name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+      import("../views/AboutView.vue")
   },
+  {
+    path: "/login",
+    name: "Login",
+    component: () =>
+      import("../views/Login.vue"),
+  },
+  {
+    path: "/index",
+    name: "Index",
+    component: () =>
+      import("../views/Index.vue"),
+      children:[
+        {
+          path: "/member",
+          name: "Member",
+          component: () =>
+            import("../views/Member.vue"),
+        },
+        {
+          path: "/staff",
+          name: "Staff",
+          component: () =>
+            import("../views/Staff.vue"),
+        },
+        {
+          path: "/supplier",
+          name: "Supplier",
+          component: () =>
+            import("../views/Supplier.vue"),
+        },
+        {
+          path: "/commodity",
+          name: "Commodity",
+          component: () =>
+            import("../views/Commodity.vue"),
+        },
+        {
+          path: "/inde",
+          name: "Inde",
+          component: () =>
+            import("../views/Inde.vue"),
+        },
+      ]
+  },
+ 
+  
 ];
 
 const router = new VueRouter({
   routes,
 });
-
+// 访问的白名单, 可以直接通行
+router.beforeEach((to, from, next) => {
+  // 访问的路径在白名单
+  if (sessionStorage.getItem('token')) {
+    next()
+  } else {
+    if (to.path=="/login") {
+      next()
+    } else {
+      next('/login')
+    }
+  }
+})
 export default router;

@@ -10,7 +10,7 @@
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
 import { addMapping } from "_@jridgewell_gen-mapping@0.3.2@@jridgewell/gen-mapping";
-
+import {getLogin} from '../../src/api/login'
 export default {
   name: "HomeView",
   data() {
@@ -23,9 +23,7 @@ export default {
     HelloWorld,
   },
   created(){
-  this.$axios.post('/api/login',{username:this.a,password:this.b}).then(res=>{
-    console.log(res);
-  })
+    
   }
 };
 </script>
